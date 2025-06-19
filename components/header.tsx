@@ -53,7 +53,7 @@ export default function Header() {
             className="flex items-center space-x-3 hover:opacity-80 transition-opacity focus:outline-none"
             style={{ minHeight: 64 }}
           >
-            <Image src="/logo.svg" alt="Morales Propiedades" width={60} height={60} priority />
+            <Image src="/logo.svg" alt="Morales Propiedades" width={80} height={53} priority />
           </button>
 
           {/* Desktop Navigation */}
