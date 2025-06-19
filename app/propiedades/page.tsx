@@ -265,12 +265,12 @@ export default function PropiedadesPage() {
                   className="md:col-span-2"
                 />
                 <Select value={operationType} onValueChange={setOperationType}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Operación" />
+                  <SelectTrigger className="bg-white border-gray-300 focus:border-blue-500">
+                    <SelectValue placeholder="Venta o Alquiler" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="venta">Venta</SelectItem>
-                    <SelectItem value="alquiler">Alquiler</SelectItem>
+                    <SelectItem value="venta">🏠 Venta</SelectItem>
+                    <SelectItem value="alquiler">🔑 Alquiler</SelectItem>
                   </SelectContent>
                 </Select>
                 <Button onClick={handleSearch} className="bg-blue-600 hover:bg-blue-700">
@@ -300,17 +300,19 @@ export default function PropiedadesPage() {
                 {/* Property Type */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Tipo de Propiedad
+                    🏠 Tipo de Propiedad
                   </label>
                   <Select value={propertyType} onValueChange={setPropertyType}>
-                    <SelectTrigger>
+                    <SelectTrigger className="focus:ring-2 focus:ring-blue-500">
                       <SelectValue placeholder="Todos los tipos" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="casa">Casa</SelectItem>
-                      <SelectItem value="departamento">Departamento</SelectItem>
-                      <SelectItem value="loft">Loft</SelectItem>
-                      <SelectItem value="terreno">Terreno</SelectItem>
+                      <SelectItem value="casa">🏠 Casa</SelectItem>
+                      <SelectItem value="departamento">🏢 Departamento</SelectItem>
+                      <SelectItem value="loft">🏭 Loft</SelectItem>
+                      <SelectItem value="terreno">🌾 Terreno</SelectItem>
+                      <SelectItem value="local">🏪 Local Comercial</SelectItem>
+                      <SelectItem value="oficina">🏢 Oficina</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -318,17 +320,22 @@ export default function PropiedadesPage() {
                 {/* Location */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Ubicación
+                    📍 Ubicación
                   </label>
                   <Select value={location} onValueChange={setLocation}>
-                    <SelectTrigger>
+                    <SelectTrigger className="focus:ring-2 focus:ring-blue-500">
                       <SelectValue placeholder="Todas las zonas" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="caba">CABA</SelectItem>
-                      <SelectItem value="gba-norte">GBA Norte</SelectItem>
-                      <SelectItem value="gba-sur">GBA Sur</SelectItem>
-                      <SelectItem value="gba-oeste">GBA Oeste</SelectItem>
+                      <SelectItem value="centro">🏛️ Centro</SelectItem>
+                      <SelectItem value="norte">🌳 Zona Norte</SelectItem>
+                      <SelectItem value="sur">🏖️ Zona Sur</SelectItem>
+                      <SelectItem value="este">🌅 Zona Este</SelectItem>
+                      <SelectItem value="oeste">🌆 Zona Oeste</SelectItem>
+                      <SelectItem value="barrio-norte">🏘️ Barrio Norte</SelectItem>
+                      <SelectItem value="villa-mitre">🏡 Villa Mitre</SelectItem>
+                      <SelectItem value="palihue">🌲 Palihue</SelectItem>
+                      <SelectItem value="ingeniero-white">⚓ Ingeniero White</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -336,9 +343,9 @@ export default function PropiedadesPage() {
                 {/* Price Range */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Rango de Precio
+                    💰 Rango de Precio
                   </label>
-                  <div className="px-2">
+                  <div className="px-2 py-4 bg-gray-50 rounded-lg">
                     <Slider
                       value={priceRange}
                       onValueChange={setPriceRange}
@@ -346,9 +353,9 @@ export default function PropiedadesPage() {
                       step={10000}
                       className="mb-4"
                     />
-                    <div className="flex justify-between text-sm text-gray-600">
-                      <span>{formatPrice(priceRange[0])}</span>
-                      <span>{formatPrice(priceRange[1])}</span>
+                    <div className="flex justify-between text-sm font-medium text-blue-600">
+                      <span className="bg-white px-2 py-1 rounded shadow-sm">{formatPrice(priceRange[0])}</span>
+                      <span className="bg-white px-2 py-1 rounded shadow-sm">{formatPrice(priceRange[1])}</span>
                     </div>
                   </div>
                 </div>
@@ -356,17 +363,17 @@ export default function PropiedadesPage() {
                 {/* Bedrooms */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Dormitorios
+                    🛏️ Dormitorios
                   </label>
                   <Select value={bedrooms} onValueChange={setBedrooms}>
-                    <SelectTrigger>
+                    <SelectTrigger className="focus:ring-2 focus:ring-blue-500">
                       <SelectValue placeholder="Cualquier cantidad" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1">1+ dormitorio</SelectItem>
-                      <SelectItem value="2">2+ dormitorios</SelectItem>
-                      <SelectItem value="3">3+ dormitorios</SelectItem>
-                      <SelectItem value="4">4+ dormitorios</SelectItem>
+                      <SelectItem value="1">🛏️ 1+ dormitorio</SelectItem>
+                      <SelectItem value="2">🛏️🛏️ 2+ dormitorios</SelectItem>
+                      <SelectItem value="3">🛏️🛏️🛏️ 3+ dormitorios</SelectItem>
+                      <SelectItem value="4">🛏️🛏️🛏️🛏️ 4+ dormitorios</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -374,16 +381,16 @@ export default function PropiedadesPage() {
                 {/* Bathrooms */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Baños
+                    🚿 Baños
                   </label>
                   <Select value={bathrooms} onValueChange={setBathrooms}>
-                    <SelectTrigger>
+                    <SelectTrigger className="focus:ring-2 focus:ring-blue-500">
                       <SelectValue placeholder="Cualquier cantidad" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1">1+ baño</SelectItem>
-                      <SelectItem value="2">2+ baños</SelectItem>
-                      <SelectItem value="3">3+ baños</SelectItem>
+                      <SelectItem value="1">🚿 1+ baño</SelectItem>
+                      <SelectItem value="2">🚿🚿 2+ baños</SelectItem>
+                      <SelectItem value="3">🚿🚿🚿 3+ baños</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -391,32 +398,43 @@ export default function PropiedadesPage() {
                 {/* Amenities */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Amenities
+                    ✨ Amenities
                   </label>
-                  <div className="space-y-2">
-                    {["Garage", "Piscina", "Gimnasio", "Seguridad 24hs", "Balcón", "Terraza"].map((amenity) => (
-                      <div key={amenity} className="flex items-center space-x-2">
+                  <div className="space-y-3 bg-gray-50 p-4 rounded-lg">
+                    {[
+                      { name: "Garage", icon: "🚗" },
+                      { name: "Piscina", icon: "🏊‍♂️" },
+                      { name: "Gimnasio", icon: "💪" },
+                      { name: "Seguridad 24hs", icon: "🛡️" },
+                      { name: "Balcón", icon: "🏡" },
+                      { name: "Terraza", icon: "🌅" },
+                      { name: "Jardín", icon: "🌱" },
+                      { name: "Parrilla", icon: "🔥" }
+                    ].map((amenity) => (
+                      <div key={amenity.name} className="flex items-center space-x-3 hover:bg-white rounded p-2 transition-colors">
                         <Checkbox
-                          id={amenity}
-                          checked={amenities.includes(amenity)}
+                          id={amenity.name}
+                          checked={amenities.includes(amenity.name)}
                           onCheckedChange={(checked) => {
                             if (checked) {
-                              setAmenities([...amenities, amenity])
+                              setAmenities([...amenities, amenity.name])
                             } else {
-                              setAmenities(amenities.filter((a) => a !== amenity))
+                              setAmenities(amenities.filter((a) => a !== amenity.name))
                             }
                           }}
+                          className="data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
                         />
-                        <label htmlFor={amenity} className="text-sm text-gray-700">
-                          {amenity}
+                        <label htmlFor={amenity.name} className="text-sm text-gray-700 cursor-pointer flex items-center space-x-2">
+                          <span>{amenity.icon}</span>
+                          <span>{amenity.name}</span>
                         </label>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <Button onClick={handleSearch} className="w-full">
-                  Aplicar Filtros
+                <Button onClick={handleSearch} className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105">
+                  🔍 Aplicar Filtros
                 </Button>
               </div>
             </div>
@@ -424,14 +442,20 @@ export default function PropiedadesPage() {
             {/* Results */}
             <div className="lg:w-3/4">
               {/* Results Header */}
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 bg-white rounded-lg shadow-sm p-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">
-                    {filteredProperties.length} Propiedades Encontradas
+                  <h2 className="text-2xl font-bold text-gray-900 flex items-center space-x-2">
+                    <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-lg font-bold">
+                      {filteredProperties.length}
+                    </span>
+                    <span>Propiedades Encontradas</span>
                   </h2>
-                  <p className="text-gray-600">
-                    {searchQuery && `Resultados para "${searchQuery}"`}
-                  </p>
+                  {searchQuery && (
+                    <p className="text-gray-600 mt-2 flex items-center space-x-2">
+                      <Search className="h-4 w-4" />
+                      <span>Resultados para "<strong>{searchQuery}</strong>"</span>
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex items-center space-x-4 mt-4 sm:mt-0">
@@ -473,12 +497,12 @@ export default function PropiedadesPage() {
               {/* Properties Grid */}
               <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" : "space-y-4"}>
                 {currentProperties.map((property) => (
-                  <Card key={property.id} className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => openPropertyModal(property)}>
+                  <Card key={property.id} className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border-0 shadow-md overflow-hidden" onClick={() => openPropertyModal(property)}>
                     <div className="relative">
                       <img
                         src={property.images && property.images.length > 0 ? property.images[0] : '/placeholder.jpg'}
                         alt={property.title || property.description || 'Propiedad'}
-                        className="w-full h-48 object-cover rounded-t-lg bg-gray-100"
+                        className="w-full h-48 object-cover bg-gray-100 group-hover:scale-105 transition-transform duration-300"
                       />
                       <Badge className="absolute top-2 left-2">
                         {property.typeText || 'Propiedad'}
