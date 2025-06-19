@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { ContactForm } from "@/types"
 import { 
   Phone, 
   Mail, 
@@ -23,7 +24,7 @@ import {
 } from "lucide-react"
 
 export default function ContactoPage() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<ContactForm>({
     name: "",
     email: "",
     phone: "",
@@ -34,37 +35,78 @@ export default function ContactoPage() {
     preferredContact: "email"
   })
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
+  const [errors, setErrors] = useState<Partial<ContactForm>>({})
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: keyof ContactForm, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
+    // Limpiar error del campo cuando el usuario empiece a escribir
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: undefined }))
+    }
+  }
+
+  const validateForm = (): boolean => {
+    const newErrors: Partial<ContactForm> = {}
+
+    if (!formData.name.trim()) {
+      newErrors.name = "El nombre es requerido"
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "El email es requerido"
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "El email no es válido"
+    }
+
+    if (!formData.subject) {
+      newErrors.subject = "El asunto es requerido"
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "El mensaje es requerido"
+    }
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
+    if (!validateForm()) {
+      return
+    }
+
     setIsSubmitting(true)
     
-    // Simular envío del formulario
-    await new Promise(resolve => setTimeout(resolve, 2000))
-    
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: "",
-        propertyType: "",
-        budget: "",
-        preferredContact: "email"
-      })
-    }, 3000)
+    try {
+      // Simular envío del formulario
+      await new Promise(resolve => setTimeout(resolve, 2000))
+      
+      setIsSubmitted(true)
+      
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setIsSubmitted(false)
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: "",
+          propertyType: "",
+          budget: "",
+          preferredContact: "email"
+        })
+      }, 3000)
+    } catch (error) {
+      console.error('Error al enviar formulario:', error)
+      // Aquí podrías mostrar un toast de error
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
