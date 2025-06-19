@@ -1,3 +1,4 @@
+
 "use client"
 
 import { useState, useEffect } from "react"
@@ -68,7 +69,6 @@ export default function PropiedadesPage() {
   const [priceRange, setPriceRange] = useState([0, 1000000])
   const [bedrooms, setBedrooms] = useState("")
   const [bathrooms, setBathrooms] = useState("")
-  const [amenities, setAmenities] = useState<string[]>([])
   const [sortBy, setSortBy] = useState("")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [showFilters, setShowFilters] = useState(false)
@@ -139,13 +139,6 @@ export default function PropiedadesPage() {
       filtered = filtered.filter((property) => property.baths >= parseInt(bathrooms))
     }
 
-    // Filtro por amenities
-    if (amenities.length > 0) {
-      filtered = filtered.filter((property) =>
-        amenities.some((amenity) => property.amenities.includes(amenity))
-      )
-    }
-
     // Ordenamiento
     if (sortBy) {
       switch (sortBy) {
@@ -181,7 +174,6 @@ export default function PropiedadesPage() {
     setPriceRange([0, 1000000])
     setBedrooms("")
     setBathrooms("")
-    setAmenities([])
     setSortBy("")
     setFilteredProperties(properties)
   }
@@ -210,17 +202,6 @@ export default function PropiedadesPage() {
     }
   }
 
-  const getAmenityIcon = (amenity: string) => {
-    const amenityLower = amenity.toLowerCase()
-    if (amenityLower.includes("garage") || amenityLower.includes("parking")) return <Car className="h-4 w-4" />
-    if (amenityLower.includes("wifi") || amenityLower.includes("internet")) return <Wifi className="h-4 w-4" />
-    if (amenityLower.includes("gimnasio") || amenityLower.includes("gym")) return <Dumbbell className="h-4 w-4" />
-    if (amenityLower.includes("seguridad") || amenityLower.includes("security")) return <Shield className="h-4 w-4" />
-    if (amenityLower.includes("jardín") || amenityLower.includes("parque") || amenityLower.includes("pileta"))
-      return <Trees className="h-4 w-4" />
-    return <Home className="h-4 w-4" />
-  }
-
   const formatPrice = (price: number) => {
     if (price >= 1000) {
       return `$${(price / 1000).toFixed(0)}k`
@@ -243,30 +224,16 @@ export default function PropiedadesPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-900 text-white py-20 relative overflow-hidden">
+      <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-900 text-white py-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-10">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
-              🏠 Encuentra tu Hogar Perfecto
+          <div className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+              Encuentra tu Hogar Perfecto
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
-              Descubre las mejores propiedades en <strong>Bahía Blanca</strong> y zona sur de Buenos Aires
+            <p className="text-lg md:text-xl text-blue-100 max-w-2xl mx-auto">
+              Descubre las mejores propiedades en Bahía Blanca y zona sur de Buenos Aires
             </p>
-            <div className="mt-6 flex justify-center space-x-8 text-blue-200">
-              <span className="flex items-center space-x-2">
-                <span className="text-2xl">🏡</span>
-                <span>+500 Propiedades</span>
-              </span>
-              <span className="flex items-center space-x-2">
-                <span className="text-2xl">⭐</span>
-                <span>Atención Personalizada</span>
-              </span>
-              <span className="flex items-center space-x-2">
-                <span className="text-2xl">📍</span>
-                <span>Mejores Zonas</span>
-              </span>
-            </div>
           </div>
 
           {/* Search Bar */}
@@ -281,15 +248,11 @@ export default function PropiedadesPage() {
                 />
                 <Select value={operationType} onValueChange={setOperationType}>
                   <SelectTrigger className="bg-white border-gray-300 focus:border-blue-500">
-                    <SelectValue placeholder="Venta o Alquiler">
-                      {operationType === "venta" && "🏠 Venta"}
-                      {operationType === "alquiler" && "🔑 Alquiler"}
-                      {!operationType && "Venta o Alquiler"}
-                    </SelectValue>
+                    <SelectValue placeholder="Venta o Alquiler" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="venta">🏠 Venta</SelectItem>
-                    <SelectItem value="alquiler">🔑 Alquiler</SelectItem>
+                    <SelectItem value="venta">Venta</SelectItem>
+                    <SelectItem value="alquiler">Alquiler</SelectItem>
                   </SelectContent>
                 </Select>
                 <Button onClick={handleSearch} className="bg-blue-600 hover:bg-blue-700">
@@ -319,19 +282,19 @@ export default function PropiedadesPage() {
                 {/* Property Type */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    🏠 Tipo de Propiedad
+                    Tipo de Propiedad
                   </label>
                   <Select value={propertyType} onValueChange={setPropertyType}>
                     <SelectTrigger className="focus:ring-2 focus:ring-blue-500">
                       <SelectValue placeholder="Todos los tipos" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="casa">🏠 Casa</SelectItem>
-                      <SelectItem value="departamento">🏢 Departamento</SelectItem>
-                      <SelectItem value="loft">🏭 Loft</SelectItem>
-                      <SelectItem value="terreno">🌾 Terreno</SelectItem>
-                      <SelectItem value="local">🏪 Local Comercial</SelectItem>
-                      <SelectItem value="oficina">🏢 Oficina</SelectItem>
+                      <SelectItem value="casa">Casa</SelectItem>
+                      <SelectItem value="departamento">Departamento</SelectItem>
+                      <SelectItem value="loft">Loft</SelectItem>
+                      <SelectItem value="terreno">Terreno</SelectItem>
+                      <SelectItem value="local">Local Comercial</SelectItem>
+                      <SelectItem value="oficina">Oficina</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -339,25 +302,25 @@ export default function PropiedadesPage() {
                 {/* Location */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    📍 Ubicación
+                    Ubicación
                   </label>
                   <Select value={location} onValueChange={setLocation}>
                     <SelectTrigger className="focus:ring-2 focus:ring-blue-500">
                       <SelectValue placeholder="Todas las zonas" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="centro">🏛️ Centro</SelectItem>
-                      <SelectItem value="villa-mitre">🏡 Villa Mitre</SelectItem>
-                      <SelectItem value="palihue">🌲 Palihue</SelectItem>
-                      <SelectItem value="ingeniero-white">⚓ Ingeniero White</SelectItem>
-                      <SelectItem value="barrio-norte">🏘️ Barrio Norte</SelectItem>
-                      <SelectItem value="barrio-universitario">🎓 Barrio Universitario</SelectItem>
-                      <SelectItem value="villa-bordeu">🌳 Villa Bordeu</SelectItem>
-                      <SelectItem value="villa-harding-green">🌿 Villa Harding Green</SelectItem>
-                      <SelectItem value="bella-vista">👁️ Bella Vista</SelectItem>
-                      <SelectItem value="almafuerte">💪 Almafuerte</SelectItem>
-                      <SelectItem value="san-martin">⭐ San Martín</SelectItem>
-                      <SelectItem value="noroeste">🌄 Noroeste</SelectItem>
+                      <SelectItem value="centro">Centro</SelectItem>
+                      <SelectItem value="villa-mitre">Villa Mitre</SelectItem>
+                      <SelectItem value="palihue">Palihue</SelectItem>
+                      <SelectItem value="ingeniero-white">Ingeniero White</SelectItem>
+                      <SelectItem value="barrio-norte">Barrio Norte</SelectItem>
+                      <SelectItem value="barrio-universitario">Barrio Universitario</SelectItem>
+                      <SelectItem value="villa-bordeu">Villa Bordeu</SelectItem>
+                      <SelectItem value="villa-harding-green">Villa Harding Green</SelectItem>
+                      <SelectItem value="bella-vista">Bella Vista</SelectItem>
+                      <SelectItem value="almafuerte">Almafuerte</SelectItem>
+                      <SelectItem value="san-martin">San Martín</SelectItem>
+                      <SelectItem value="noroeste">Noroeste</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -365,7 +328,7 @@ export default function PropiedadesPage() {
                 {/* Price Range */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    💰 Rango de Precio
+                    Rango de Precio
                   </label>
                   <div className="px-2 py-4 bg-gray-50 rounded-lg">
                     <Slider
@@ -385,17 +348,17 @@ export default function PropiedadesPage() {
                 {/* Bedrooms */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    🛏️ Dormitorios
+                    Dormitorios
                   </label>
                   <Select value={bedrooms} onValueChange={setBedrooms}>
                     <SelectTrigger className="focus:ring-2 focus:ring-blue-500">
                       <SelectValue placeholder="Cualquier cantidad" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1">🛏️ 1+ dormitorio</SelectItem>
-                      <SelectItem value="2">🛏️🛏️ 2+ dormitorios</SelectItem>
-                      <SelectItem value="3">🛏️🛏️🛏️ 3+ dormitorios</SelectItem>
-                      <SelectItem value="4">🛏️🛏️🛏️🛏️ 4+ dormitorios</SelectItem>
+                      <SelectItem value="1">1+ dormitorio</SelectItem>
+                      <SelectItem value="2">2+ dormitorios</SelectItem>
+                      <SelectItem value="3">3+ dormitorios</SelectItem>
+                      <SelectItem value="4">4+ dormitorios</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -403,60 +366,22 @@ export default function PropiedadesPage() {
                 {/* Bathrooms */}
                 <div className="mb-6">
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    🚿 Baños
+                    Baños
                   </label>
                   <Select value={bathrooms} onValueChange={setBathrooms}>
                     <SelectTrigger className="focus:ring-2 focus:ring-blue-500">
                       <SelectValue placeholder="Cualquier cantidad" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1">🚿 1+ baño</SelectItem>
-                      <SelectItem value="2">🚿🚿 2+ baños</SelectItem>
-                      <SelectItem value="3">🚿🚿🚿 3+ baños</SelectItem>
+                      <SelectItem value="1">1+ baño</SelectItem>
+                      <SelectItem value="2">2+ baños</SelectItem>
+                      <SelectItem value="3">3+ baños</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
 
-                {/* Amenities */}
-                <div className="mb-6">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    ✨ Amenities
-                  </label>
-                  <div className="space-y-3 bg-gray-50 p-4 rounded-lg">
-                    {[
-                      { name: "Garage", icon: "🚗" },
-                      { name: "Piscina", icon: "🏊‍♂️" },
-                      { name: "Gimnasio", icon: "💪" },
-                      { name: "Seguridad 24hs", icon: "🛡️" },
-                      { name: "Balcón", icon: "🏡" },
-                      { name: "Terraza", icon: "🌅" },
-                      { name: "Jardín", icon: "🌱" },
-                      { name: "Parrilla", icon: "🔥" }
-                    ].map((amenity) => (
-                      <div key={amenity.name} className="flex items-center space-x-3 hover:bg-white rounded p-2 transition-colors">
-                        <Checkbox
-                          id={amenity.name}
-                          checked={amenities.includes(amenity.name)}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              setAmenities([...amenities, amenity.name])
-                            } else {
-                              setAmenities(amenities.filter((a) => a !== amenity.name))
-                            }
-                          }}
-                          className="data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
-                        />
-                        <label htmlFor={amenity.name} className="text-sm text-gray-700 cursor-pointer flex items-center space-x-2">
-                          <span>{amenity.icon}</span>
-                          <span>{amenity.name}</span>
-                        </label>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
                 <Button onClick={handleSearch} className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 rounded-lg shadow-lg transform transition-all duration-200 hover:scale-105">
-                  🔍 Aplicar Filtros
+                  Aplicar Filtros
                 </Button>
               </div>
             </div>
@@ -519,29 +444,28 @@ export default function PropiedadesPage() {
               {/* Properties Grid */}
               <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" : "space-y-4"}>
                 {currentProperties.map((property) => (
-                  <Card key={property.id} className="group hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 border-0 shadow-lg overflow-hidden bg-white rounded-xl" onClick={() => openPropertyModal(property)}>
-                    <div className="relative">
+                  <Card key={property.id} className="group overflow-hidden hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" onClick={() => openPropertyModal(property)}>
+                    <div className="relative overflow-hidden">
                       <img
                         src={property.images && property.images.length > 0 ? property.images[0] : '/placeholder.jpg'}
                         alt={property.title || property.description || 'Propiedad'}
-                        className="w-full h-52 object-cover bg-gray-100 group-hover:scale-110 transition-transform duration-500"
+                        className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                       <Badge className="absolute top-3 left-3 bg-blue-600 text-white font-semibold px-3 py-1 shadow-lg">
                         {property.typeText || 'Propiedad'}
                       </Badge>
                       <div className="absolute top-3 right-3 flex space-x-2">
                         <Button variant="ghost" size="sm" className="h-9 w-9 p-0 bg-white/90 hover:bg-white rounded-full shadow-lg backdrop-blur-sm">
-                          <span className="text-red-500 text-lg">♥</span>
+                          <Heart className="h-4 w-4 text-red-500" />
                           <span className="sr-only">Favorito</span>
                         </Button>
                         <Button variant="ghost" size="sm" className="h-9 w-9 p-0 bg-white/90 hover:bg-white rounded-full shadow-lg backdrop-blur-sm">
-                          <span className="text-blue-600 text-lg">↗</span>
+                          <Share2 className="h-4 w-4 text-blue-600" />
                           <span className="sr-only">Compartir</span>
                         </Button>
                       </div>
                       <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1 shadow-lg">
-                        <span className="text-xs font-medium text-gray-700">📸 {property.images?.length || 1} fotos</span>
+                        <span className="text-xs font-medium text-gray-700">{property.images?.length || 1} fotos</span>
                       </div>
                     </div>
                     <CardContent className="p-5">
@@ -563,15 +487,15 @@ export default function PropiedadesPage() {
                       <div className="grid grid-cols-3 gap-3 mb-4">
                         <div className="text-center bg-gray-50 rounded-lg p-2">
                           <div className="text-lg font-bold text-gray-900">{property.beds ?? '-'}</div>
-                          <div className="text-xs text-gray-600 font-medium">🛏️ Dorm.</div>
+                          <div className="text-xs text-gray-600 font-medium">Dorm.</div>
                         </div>
                         <div className="text-center bg-gray-50 rounded-lg p-2">
                           <div className="text-lg font-bold text-gray-900">{property.baths ?? '-'}</div>
-                          <div className="text-xs text-gray-600 font-medium">🛁 Baños</div>
+                          <div className="text-xs text-gray-600 font-medium">Baños</div>
                         </div>
                         <div className="text-center bg-gray-50 rounded-lg p-2">
                           <div className="text-lg font-bold text-gray-900">{property.area || '-'}</div>
-                          <div className="text-xs text-gray-600 font-medium">📐 m²</div>
+                          <div className="text-xs text-gray-600 font-medium">m²</div>
                         </div>
                       </div>
                     </CardContent>
@@ -580,17 +504,17 @@ export default function PropiedadesPage() {
                         {Array.isArray(property.features) && property.features.length > 0 ? (
                           property.features.slice(0, 2).map((feature, index) => (
                             <Badge key={index} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
-                              ✨ {feature}
+                              {feature}
                             </Badge>
                           ))
                         ) : (
                           <Badge variant="outline" className="text-xs bg-gray-50 text-gray-500">
-                            📋 Consultar detalles
+                            Consultar detalles
                           </Badge>
                         )}
                         {property.parking > 0 && (
                           <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
-                            🚗 Cochera
+                            Cochera
                           </Badge>
                         )}
                       </div>
@@ -614,16 +538,32 @@ export default function PropiedadesPage() {
                 </div>
               )}
 
-              {/* Controles de paginación debajo de la grid */}
-              <div className="flex justify-center items-center gap-4 mt-8">
-                <Button onClick={goToPrevPage} disabled={currentPage === 1} variant="outline">
-                  Anterior
-                </Button>
-                <span>Página {currentPage} de {totalPages}</span>
-                <Button onClick={goToNextPage} disabled={currentPage === totalPages} variant="outline">
-                  Siguiente
-                </Button>
-              </div>
+              {/* Pagination */}
+              {totalPages > 1 && (
+                <div className="flex justify-center items-center space-x-4 mt-8">
+                  <Button 
+                    onClick={goToPrevPage} 
+                    disabled={currentPage === 1} 
+                    variant="outline"
+                    className="px-6 py-2"
+                  >
+                    <ChevronLeft className="h-4 w-4 mr-2" />
+                    Anterior
+                  </Button>
+                  <span className="text-gray-600 font-medium">
+                    Página {currentPage} de {totalPages}
+                  </span>
+                  <Button 
+                    onClick={goToNextPage} 
+                    disabled={currentPage === totalPages} 
+                    variant="outline"
+                    className="px-6 py-2"
+                  >
+                    Siguiente
+                    <ChevronRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -708,23 +648,6 @@ export default function PropiedadesPage() {
 
                 <p className="text-gray-700 mb-6">{selectedProperty.description}</p>
 
-                {/* Amenities */}
-                <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-3">Amenities</h3>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                    {Array.isArray(selectedProperty.amenities) && selectedProperty.amenities.length > 0 ? (
-                      selectedProperty.amenities.map((amenity, index) => (
-                        <div key={index} className="flex items-center space-x-2 text-sm">
-                          {getAmenityIcon(amenity)}
-                          <span>{amenity}</span>
-                        </div>
-                      ))
-                    ) : (
-                      <span className="text-xs text-gray-400">Sin amenities</span>
-                    )}
-                  </div>
-                </div>
-
                 {/* Contact Actions */}
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Button className="flex-1" asChild>
@@ -772,4 +695,4 @@ export default function PropiedadesPage() {
       <Footer />
     </div>
   )
-} 
+}
