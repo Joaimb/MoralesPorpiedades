@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 import Header from "@/components/header"
 import Footer from "@/components/footer"
 import {
@@ -76,6 +77,7 @@ interface UserPreferences {
 }
 
 export default function InmobiliariaPage() {
+  const router = useRouter()
   const [searchType, setSearchType] = useState("")
   const [searchLocation, setSearchLocation] = useState("")
   const [searchPrice, setSearchPrice] = useState("")
@@ -401,9 +403,24 @@ export default function InmobiliariaPage() {
     },
   ]
 
-  // Inicializar con las primeras 6 propiedades
+  // Cargar propiedades desde la API (mismas que en /propiedades)
   useEffect(() => {
-    setFilteredProperties(allProperties.slice(0, 6))
+    fetch('/api/propiedades')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          // Mostrar las 6 más recientes en la página principal
+          const recentProperties = data.slice(0, 6);
+          setFilteredProperties(recentProperties);
+        } else {
+          // Si no hay datos de la API, usar propiedades de ejemplo
+          setFilteredProperties(allProperties.slice(0, 6));
+        }
+      })
+      .catch(() => {
+        // En caso de error, usar propiedades de ejemplo
+        setFilteredProperties(allProperties.slice(0, 6));
+      });
   }, [])
 
   const getPriceRange = (priceRange: string) => {
@@ -761,8 +778,12 @@ export default function InmobiliariaPage() {
               </Button>
             </div>
             <div className="text-center">
-              <Button onClick={clearFilters} variant="ghost" className="text-gray-600 hover:text-gray-900">
-                Limpiar todos los filtros
+              <Button 
+                onClick={() => router.push('/propiedades')} 
+                variant="ghost" 
+                className="text-blue-600 hover:text-blue-800 font-semibold"
+              >
+                Ver Todas las Propiedades
               </Button>
             </div>
           </div>
