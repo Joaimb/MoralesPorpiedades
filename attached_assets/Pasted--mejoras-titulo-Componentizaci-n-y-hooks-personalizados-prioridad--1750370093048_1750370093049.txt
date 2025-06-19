@@ -1,0 +1,106 @@
+{
+  "mejoras": [
+    {
+      "titulo": "Componentización y hooks personalizados",
+      "prioridad": "alta",
+      "descripcion": "Extraer filtros, cards de propiedades, modales y paginación en componentes reutilizables. Centralizar la lógica de filtrado y paginación en hooks propios.",
+      "pasos": [
+        "Identificar partes repetidas o complejas en las páginas principales.",
+        "Crear componentes en la carpeta 'components' (ej: PropertyCard, PropertyFilters, PropertyModal, Pagination).",
+        "Crear hooks en la carpeta 'hooks' (ej: usePropertyFilters, usePagination).",
+        "Reemplazar la lógica inline por el uso de estos componentes y hooks."
+      ]
+    },
+    {
+      "titulo": "Mejorar tipado y validaciones",
+      "prioridad": "alta",
+      "descripcion": "Asegurar el uso estricto de TypeScript y validar los datos recibidos del backend.",
+      "pasos": [
+        "Revisar y mejorar las interfaces y tipos en todo el proyecto.",
+        "Centralizar los tipos en una carpeta o archivo común.",
+        "Agregar validaciones de datos en el frontend antes de renderizar.",
+        "Agregar validaciones en el backend antes de responder."
+      ]
+    },
+    {
+      "titulo": "Gestión de loading y errores",
+      "prioridad": "media",
+      "descripcion": "Mejorar la experiencia de usuario mostrando skeletons y mensajes claros de error.",
+      "pasos": [
+        "Agregar componentes de loading (skeletons) en las listas y cards.",
+        "Mostrar mensajes de error amigables si falla la carga de datos.",
+        "Agregar toasts o alertas para feedback de acciones importantes."
+      ]
+    },
+    {
+      "titulo": "Accesibilidad y SEO",
+      "prioridad": "media",
+      "descripcion": "Asegurar que la web sea accesible y esté optimizada para buscadores.",
+      "pasos": [
+        "Revisar el uso de labels, roles y navegación por teclado.",
+        "Asegurar buen contraste de colores.",
+        "Agregar y mejorar títulos, descripciones y etiquetas meta en cada página."
+      ]
+    },
+    {
+      "titulo": "Optimización de rendimiento",
+      "prioridad": "media",
+      "descripcion": "Mejorar la velocidad y eficiencia de la web.",
+      "pasos": [
+        "Implementar paginación real en el backend y frontend.",
+        "Agregar lazy loading a las imágenes.",
+        "Usar React.memo y useMemo donde sea necesario."
+      ]
+    },
+    {
+      "titulo": "Estructura y convenciones",
+      "prioridad": "alta",
+      "descripcion": "Organizar mejor la estructura del proyecto y aplicar reglas de código.",
+      "pasos": [
+        "Separar claramente páginas, componentes, hooks, servicios y utilidades.",
+        "Configurar y aplicar ESLint y Prettier.",
+        "Establecer convenciones de nombres y estructura de carpetas."
+      ]
+    },
+    {
+      "titulo": "Internacionalización",
+      "prioridad": "baja",
+      "descripcion": "Preparar la app para soportar varios idiomas si es necesario.",
+      "pasos": [
+        "Instalar y configurar una librería de i18n (ej: i18next).",
+        "Extraer textos a archivos de traducción.",
+        "Agregar selector de idioma si corresponde."
+      ]
+    },
+    {
+      "titulo": "Seguridad",
+      "prioridad": "alta",
+      "descripcion": "Validar y sanear datos, e implementar control de acceso si hay panel de administración.",
+      "pasos": [
+        "Sanear y validar datos en backend y frontend.",
+        "Implementar autenticación y autorización para rutas protegidas.",
+        "Revisar posibles vulnerabilidades (XSS, SQL Injection, etc)."
+      ]
+    },
+    {
+      "titulo": "Testing",
+      "prioridad": "media",
+      "descripcion": "Agregar tests unitarios y de integración.",
+      "pasos": [
+        "Configurar Jest y React Testing Library.",
+        "Agregar tests para componentes principales y lógica de filtrado.",
+        "Agregar tests para endpoints del backend."
+      ]
+    },
+    {
+      "titulo": "Documentación",
+      "prioridad": "media",
+      "descripcion": "Mantener documentación técnica y de uso.",
+      "pasos": [
+        "Actualizar el README con instrucciones de instalación y despliegue.",
+        "Documentar componentes, hooks y servicios principales.",
+        "Agregar ejemplos de uso y convenciones del proyecto."
+      ]
+    }
+  ]
+}
