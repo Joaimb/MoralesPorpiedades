@@ -243,15 +243,30 @@ export default function PropiedadesPage() {
       <Header />
 
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-800 text-white py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Encuentra tu Propiedad Ideal
+      <section className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-900 text-white py-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center mb-10">
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
+              🏠 Encuentra tu Hogar Perfecto
             </h1>
-            <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-              Explora nuestra amplia selección de propiedades en venta y alquiler en las mejores zonas
+            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+              Descubre las mejores propiedades en <strong>Bahía Blanca</strong> y zona sur de Buenos Aires
             </p>
+            <div className="mt-6 flex justify-center space-x-8 text-blue-200">
+              <span className="flex items-center space-x-2">
+                <span className="text-2xl">🏡</span>
+                <span>+500 Propiedades</span>
+              </span>
+              <span className="flex items-center space-x-2">
+                <span className="text-2xl">⭐</span>
+                <span>Atención Personalizada</span>
+              </span>
+              <span className="flex items-center space-x-2">
+                <span className="text-2xl">📍</span>
+                <span>Mejores Zonas</span>
+              </span>
+            </div>
           </div>
 
           {/* Search Bar */}
@@ -266,7 +281,11 @@ export default function PropiedadesPage() {
                 />
                 <Select value={operationType} onValueChange={setOperationType}>
                   <SelectTrigger className="bg-white border-gray-300 focus:border-blue-500">
-                    <SelectValue placeholder="Venta o Alquiler" />
+                    <SelectValue placeholder="Venta o Alquiler">
+                      {operationType === "venta" && "🏠 Venta"}
+                      {operationType === "alquiler" && "🔑 Alquiler"}
+                      {!operationType && "Venta o Alquiler"}
+                    </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="venta">🏠 Venta</SelectItem>
@@ -328,14 +347,17 @@ export default function PropiedadesPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="centro">🏛️ Centro</SelectItem>
-                      <SelectItem value="norte">🌳 Zona Norte</SelectItem>
-                      <SelectItem value="sur">🏖️ Zona Sur</SelectItem>
-                      <SelectItem value="este">🌅 Zona Este</SelectItem>
-                      <SelectItem value="oeste">🌆 Zona Oeste</SelectItem>
-                      <SelectItem value="barrio-norte">🏘️ Barrio Norte</SelectItem>
                       <SelectItem value="villa-mitre">🏡 Villa Mitre</SelectItem>
                       <SelectItem value="palihue">🌲 Palihue</SelectItem>
                       <SelectItem value="ingeniero-white">⚓ Ingeniero White</SelectItem>
+                      <SelectItem value="barrio-norte">🏘️ Barrio Norte</SelectItem>
+                      <SelectItem value="barrio-universitario">🎓 Barrio Universitario</SelectItem>
+                      <SelectItem value="villa-bordeu">🌳 Villa Bordeu</SelectItem>
+                      <SelectItem value="villa-harding-green">🌿 Villa Harding Green</SelectItem>
+                      <SelectItem value="bella-vista">👁️ Bella Vista</SelectItem>
+                      <SelectItem value="almafuerte">💪 Almafuerte</SelectItem>
+                      <SelectItem value="san-martin">⭐ San Martín</SelectItem>
+                      <SelectItem value="noroeste">🌄 Noroeste</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -497,63 +519,87 @@ export default function PropiedadesPage() {
               {/* Properties Grid */}
               <div className={viewMode === "grid" ? "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" : "space-y-4"}>
                 {currentProperties.map((property) => (
-                  <Card key={property.id} className="group hover:shadow-2xl transition-all duration-300 cursor-pointer transform hover:-translate-y-1 border-0 shadow-md overflow-hidden" onClick={() => openPropertyModal(property)}>
+                  <Card key={property.id} className="group hover:shadow-2xl transition-all duration-500 cursor-pointer transform hover:-translate-y-2 border-0 shadow-lg overflow-hidden bg-white rounded-xl" onClick={() => openPropertyModal(property)}>
                     <div className="relative">
                       <img
                         src={property.images && property.images.length > 0 ? property.images[0] : '/placeholder.jpg'}
                         alt={property.title || property.description || 'Propiedad'}
-                        className="w-full h-48 object-cover bg-gray-100 group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-52 object-cover bg-gray-100 group-hover:scale-110 transition-transform duration-500"
                       />
-                      <Badge className="absolute top-2 left-2">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <Badge className="absolute top-3 left-3 bg-blue-600 text-white font-semibold px-3 py-1 shadow-lg">
                         {property.typeText || 'Propiedad'}
                       </Badge>
-                      <div className="absolute top-2 right-2 flex space-x-1">
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 bg-white/80 hover:bg-white">
+                      <div className="absolute top-3 right-3 flex space-x-2">
+                        <Button variant="ghost" size="sm" className="h-9 w-9 p-0 bg-white/90 hover:bg-white rounded-full shadow-lg backdrop-blur-sm">
+                          <span className="text-red-500 text-lg">♥</span>
                           <span className="sr-only">Favorito</span>
-                          ♥
                         </Button>
-                        <Button variant="ghost" size="sm" className="h-8 w-8 p-0 bg-white/80 hover:bg-white">
+                        <Button variant="ghost" size="sm" className="h-9 w-9 p-0 bg-white/90 hover:bg-white rounded-full shadow-lg backdrop-blur-sm">
+                          <span className="text-blue-600 text-lg">↗</span>
                           <span className="sr-only">Compartir</span>
-                          ↗
                         </Button>
+                      </div>
+                      <div className="absolute bottom-3 left-3 bg-white/95 backdrop-blur-sm rounded-full px-3 py-1 shadow-lg">
+                        <span className="text-xs font-medium text-gray-700">📸 {property.images?.length || 1} fotos</span>
                       </div>
                     </div>
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold text-lg mb-2">{property.title || property.description || 'Propiedad sin título'}</h3>
-                      <p className="text-gray-600 text-sm mb-3 flex items-center">
-                        📍 {property.location || `${property.street || ''} ${property.city_id || ''}` || 'Sin ubicación'}
+                    <CardContent className="p-5">
+                      <h3 className="font-bold text-xl mb-3 text-gray-900 line-clamp-2 leading-tight">
+                        {property.title || property.description || 'Propiedad sin título'}
+                      </h3>
+                      <p className="text-gray-600 text-sm mb-4 flex items-center font-medium">
+                        <MapPin className="h-4 w-4 mr-2 text-blue-500" />
+                        {property.location || `${property.street || ''} ${property.city_id || ''}` || 'Sin ubicación'}
                       </p>
-                      <p className="text-2xl font-bold text-blue-600 mb-3">
-                        {property.priceText || (property.price ? `$${property.price}` : 'Consultar')}
-                      </p>
-                      <div className="flex items-center justify-between text-sm text-gray-600">
-                        <div className="flex items-center space-x-4">
-                          <span className="flex items-center">🛏️ {property.beds ?? '-'}</span>
-                          <span className="flex items-center">🛁 {property.baths ?? '-'}</span>
-                          <span className="flex items-center">📐 {property.area ? `${property.area}m²` : '-'}</span>
+                      <div className="mb-4">
+                        <p className="text-3xl font-bold text-blue-600 mb-1">
+                          {property.priceText || (property.price ? `$${property.price.toLocaleString()}` : 'Consultar')}
+                        </p>
+                        <p className="text-xs text-gray-500 uppercase tracking-wide font-semibold">
+                          {operationType === 'alquiler' ? 'POR MES' : 'PRECIO TOTAL'}
+                        </p>
+                      </div>
+                      <div className="grid grid-cols-3 gap-3 mb-4">
+                        <div className="text-center bg-gray-50 rounded-lg p-2">
+                          <div className="text-lg font-bold text-gray-900">{property.beds ?? '-'}</div>
+                          <div className="text-xs text-gray-600 font-medium">🛏️ Dorm.</div>
                         </div>
-                        {property.parking > 0 && (
-                          <span className="flex items-center">🚗 {property.parking}</span>
-                        )}
+                        <div className="text-center bg-gray-50 rounded-lg p-2">
+                          <div className="text-lg font-bold text-gray-900">{property.baths ?? '-'}</div>
+                          <div className="text-xs text-gray-600 font-medium">🛁 Baños</div>
+                        </div>
+                        <div className="text-center bg-gray-50 rounded-lg p-2">
+                          <div className="text-lg font-bold text-gray-900">{property.area || '-'}</div>
+                          <div className="text-xs text-gray-600 font-medium">📐 m²</div>
+                        </div>
                       </div>
                     </CardContent>
-                    <CardFooter className="p-4 pt-0">
-                      <div className="flex flex-wrap gap-1">
+                    <CardFooter className="p-5 pt-0 space-y-3">
+                      <div className="flex flex-wrap gap-2">
                         {Array.isArray(property.features) && property.features.length > 0 ? (
-                          property.features.slice(0, 3).map((feature, index) => (
-                            <Badge key={index} variant="secondary" className="text-xs">
-                              {feature}
+                          property.features.slice(0, 2).map((feature, index) => (
+                            <Badge key={index} variant="outline" className="text-xs bg-blue-50 text-blue-700 border-blue-200">
+                              ✨ {feature}
                             </Badge>
                           ))
                         ) : (
-                          <span className="text-xs text-gray-400">Sin características</span>
+                          <Badge variant="outline" className="text-xs bg-gray-50 text-gray-500">
+                            📋 Consultar detalles
+                          </Badge>
+                        )}
+                        {property.parking > 0 && (
+                          <Badge variant="outline" className="text-xs bg-green-50 text-green-700 border-green-200">
+                            🚗 Cochera
+                          </Badge>
                         )}
                       </div>
-                      <div className="mt-2 text-xs text-gray-500 line-clamp-2">
-                        {property.description || 'Sin descripción'}
-                      </div>
-                      <Button className="mt-4 w-full" onClick={(e) => { e.stopPropagation(); openPropertyModal(property); }}>
-                        Más información
+                      <Button 
+                        className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 shadow-lg hover:shadow-xl transition-all duration-300 rounded-lg" 
+                        onClick={(e) => { e.stopPropagation(); openPropertyModal(property); }}
+                      >
+                        <Eye className="h-4 w-4 mr-2" />
+                        Ver Detalles
                       </Button>
                     </CardFooter>
                   </Card>
